@@ -17,5 +17,8 @@ gap : 20%}
 .best_movie{
     margin: 20px;
     border: solid black 5px;
-    height: 20vh
+    height: 20vh;
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: center;
 }
