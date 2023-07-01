@@ -25,41 +25,34 @@ gap : 20%}
 
 
 
+
+
+/* CAROUSEL BEST NOTES */
+h3{
+    text-align: center;
+    padding: 30px;
+}
+
 .carousel-container {
-  width: 80%;
-  margin: 0 auto;
-  overflow: hidden;
-  position: relative;
-}
-
-.carousel-images {
   display: flex;
-  transition: transform 0.5s ease;
+  padding: 0 50px; 
+  align-items: center;
+  justify-content: center;
+  gap : 20px;
 }
 
-.carousel-image {
-  flex: 0 0 25%; /* Changer la valeur pour ajuster la taille des images */
-  margin-right: 10px; /* Espacement entre les images */
-  border: 2px solid black; /* Ajout d'un cadre noir autour des images */
+.carousel-images{
+    width: 90vh;
+    display: flex;
+    overflow: hidden;
+    gap : 10px;
+    justify-content: center;
+    align-items: center;
+    border: solid red 5px;
+    padding: 20px;
 }
 
-.carousel-nav-left,
-.carousel-nav-right {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 30px;
-  height: 30px;
-  background-color: black;
-  opacity: 0.5;
-  cursor: pointer;
-}
 
-.carousel-nav-left {
-  left: 10px;
-}
 
-.carousel-nav-right {
-  right: 10px;
-}
+
 

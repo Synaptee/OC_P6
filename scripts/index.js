@@ -54,27 +54,24 @@ afficherImageURL(); // Appel de la fonction pour afficher l'URL de l'image
 
 
 // ******** CODE LIE AU CAROUSSEL ********
-const carouselContainer = document.querySelector('.carousel-container');
 const carouselImages = document.querySelector('.carousel-images');
-const carouselNavLeft = document.querySelector('.carousel-nav-left');
-const carouselNavRight = document.querySelector('.carousel-nav-right');
-let currentIndex = 0;
+const carouselContainer = document.querySelector('.carousel-container');
+const carouselImageElements = document.querySelectorAll('.carousel-image');
 
-function nextImage() {
-  currentIndex++;
-  if (currentIndex > 3) {
-    currentIndex = 3;
+// N'afficher que 4 affiches
+carouselImageElements.forEach((image, index) => {
+  if (index >= 4) {
+    image.style.display = 'none';
   }
-  carouselImages.style.transform = `translateX(-${currentIndex * 25}%)`;
-}
+});
 
-function previousImage() {
-  currentIndex--;
-  if (currentIndex < 0) {
-    currentIndex = 0;
-  }
-  carouselImages.style.transform = `translateX(-${currentIndex * 25}%)`;
-}
+// Centrer les 4 affiches
+carouselContainer.style.justifyContent = 'center';
+carouselImages.style.width = 'fit-content';
 
-carouselNavLeft.addEventListener('click', previousImage);
-carouselNavRight.addEventListener('click', nextImage);
+
+
+
+
+
+
