@@ -1,35 +1,14 @@
-// async function requeteAPI() {
-//   try {
-//     const response = await fetch('http://localhost:8000/api/v1/titles/');
-//     const data = await response.json();
-//     console.log(data);
-//     return data;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
-// requeteAPI();
-
 // ********    CA ON SAIT QUE CA MARCHE   *****
-// async function bestRatedMovie(param) {
-//   try {
-//     const response = await fetch('http://localhost:8000/api/v1/' + param);
-//     const data = await response.json();
-//     const bestMovieURL = data.results[0].image_url;
-//     const imageContainer = document.getElementById('best_movie_img');
-//     imageContainer.style.backgroundImage = `url(${bestMovieURL})`;
+function bestRatedMovie() {
+  try {
+    const bestMovieURL = storedTopRatedMovies[0].image_url;
+    const imageContainer = document.getElementById('best_movie_img');
+    imageContainer.style.backgroundImage = `url(${bestMovieURL})`;
 
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
-
-// window.addEventListener('load', bestRatedMovie('titles/?sort_by=-imdb_score'));
-
-
-//let imageURL; // Déclaration de la variable en dehors de la fonction
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 async function interrogerAPI(param) {
   try {
@@ -41,37 +20,61 @@ async function interrogerAPI(param) {
   }
 }
 
-async function afficherImageURL() {
-  let imageURL;
-  imageURL = await interrogerAPI('titles/?sort_by=-imdb_score');
-  imageURL = imageURL.results[0]// Appel de la fonction pour récupérer l'URL de l'image
-  console.log(imageURL); // Affichage de l'URL de l'image dans la console
+let index_init_best = 0;
+let storedTopRatedMovies = [];
+
+function bestRatedCarousel() {
+  let indexHTML = 1;
+  try {
+    for (let i = index_init_best; i < i + 4; i++) {
+      imgURL = storedTopRatedMovies[i].image_url;
+      //console.log(imgURL);
+      imageContainer = document.getElementById('best_img_' + indexHTML);
+      imageContainer.style.backgroundImage = `url(${imgURL})`;
+      indexHTML++;
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-afficherImageURL(); // Appel de la fonction pour afficher l'URL de l'image
 
 
+async function loadDatas(param, movieList) {
+  try {
+    const response = await interrogerAPI(param);
 
-
-// ******** CODE LIE AU CAROUSSEL ********
-const carouselImages = document.querySelector('.carousel-images');
-const carouselContainer = document.querySelector('.carousel-container');
-const carouselImageElements = document.querySelectorAll('.carousel-image');
-
-// N'afficher que 4 affiches
-carouselImageElements.forEach((image, index) => {
-  if (index >= 4) {
-    image.style.display = 'none';
+    for (let i = 0; i < response.results.length; i++) {
+      movieList.push(response.results[i]);
+    }
+    const response2 = await interrogerAPI(param + '&page=2');
+    for (let i = 0; i < 2; i++) {
+      movieList.push(response2.results[i]);
+    }
+  } catch (error) {
+    console.error(error);
   }
+}
+
+
+
+
+async function loadTopRatedMovies() {
+  let topRatedMovies = [];
+  let param = 'titles/?sort_by=-imdb_score';
+  await loadDatas(param, topRatedMovies);
+  storedTopRatedMovies = topRatedMovies;
+}
+
+
+
+
+// Chargement initial de la page
+window.addEventListener('load', () => {
+  loadTopRatedMovies().then(() => {
+    bestRatedMovie();
+    bestRatedCarousel();
+  });
 });
-
-// Centrer les 4 affiches
-carouselContainer.style.justifyContent = 'center';
-carouselImages.style.width = 'fit-content';
-
-
-
-
-
 
 
