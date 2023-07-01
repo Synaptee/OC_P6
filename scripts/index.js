@@ -22,14 +22,39 @@ async function interrogerAPI(param) {
 
 let index_init_best = 0;
 let storedTopRatedMovies = [];
+let storedCat1Movies = [];
+let storedCat2Movies = [];
+let storedCat3Movies = [];
+let cat1 = "Action";
+let cat2 = "Comedy";
+let cat3 = "Sci-Fi";
+let cat1Param = "titles/?sort_by=-imdb_score&genre_contains=Thriller";
+let cat2Param = "titles/?sort_by=-imdb_score&genre_contains=Comedy";
+let cat3Param = "titles/?sort_by=-imdb_score&genre_contains=Sci-Fi";
 
 function bestRatedCarousel() {
   let indexHTML = 1;
   try {
-    for (let i = index_init_best; i < i + 4; i++) {
+    for (let i = 0; i < i + 4; i++) {
       imgURL = storedTopRatedMovies[i].image_url;
-      //console.log(imgURL);
       imageContainer = document.getElementById('best_img_' + indexHTML);
+      imageContainer.style.backgroundImage = `url(${imgURL})`;
+      indexHTML++;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+function categoryCarousel(category, movieList) {
+  let indexHTML = 1;
+  let listToUse = movieList;
+  try {
+    for (let i = index_init_best; i < i + 4; i++) {
+      imgURL = listToUse[i].image_url;
+      //console.log(imgURL);
+      imageContainer = document.getElementById(category + '_img_' + indexHTML);
       imageContainer.style.backgroundImage = `url(${imgURL})`;
       indexHTML++;
     }
@@ -66,7 +91,22 @@ async function loadTopRatedMovies() {
   storedTopRatedMovies = topRatedMovies;
 }
 
+async function loadTopCategoryMovies(param, storedmovieList) {
+  let movieList = storedmovieList
+  //let param = param;
+  await loadDatas(param, movieList);
+  storedmovieList = movieList;
+}
 
+function swipeRight(movieList) {
+  let firstMovie = movieList.shift();
+  movieList.push(firstMovie);
+}
+
+function swipeLeft(movieList) {
+  let lastMovie = movieList.pop();
+  movieList.unshift(lastMovie);
+}
 
 
 // Chargement initial de la page
@@ -75,6 +115,66 @@ window.addEventListener('load', () => {
     bestRatedMovie();
     bestRatedCarousel();
   });
+  loadTopCategoryMovies(cat1Param, storedCat1Movies).then(() => {
+    categoryCarousel(cat1, storedCat1Movies);
+  });
+  loadTopCategoryMovies(cat2Param, storedCat2Movies).then(() => {
+    categoryCarousel(cat2, storedCat2Movies);
+  });
+  loadTopCategoryMovies(cat3Param, storedCat3Movies).then(() => {
+    categoryCarousel(cat3, storedCat3Movies);
+  });
 });
 
 
+document.addEventListener("DOMContentLoaded", function () {
+  const bestNavRight = document.querySelector(".best-nav-right");
+  const bestNavLeft = document.querySelector(".best-nav-left");
+  const cat1NavRight = document.querySelector(".cat1-nav-right");
+  const cat1NavLeft = document.querySelector(".cat1-nav-left");
+  const cat2NavRight = document.querySelector(".cat2-nav-right");
+  const cat2NavLeft = document.querySelector(".cat2-nav-left");
+  const cat3NavRight = document.querySelector(".cat3-nav-right");
+  const cat3NavLeft = document.querySelector(".cat3-nav-left");
+
+  bestNavRight.addEventListener("click", function () {
+    swipeRight(storedTopRatedMovies);
+    bestRatedCarousel();
+  });
+
+  bestNavLeft.addEventListener("click", function () {
+    swipeLeft(storedTopRatedMovies);
+    bestRatedCarousel();
+  });
+
+
+  cat1NavRight.addEventListener("click", function () {
+    swipeRight(storedCat1Movies);
+    categoryCarousel(cat1, storedCat1Movies);
+  });
+
+  cat1NavLeft.addEventListener("click", function () {
+    swipeLeft(storedCat1Movies);
+    categoryCarousel(cat1, storedCat1Movies);
+  });
+
+  cat2NavRight.addEventListener("click", function () {
+    swipeRight(storedCat2Movies);
+    categoryCarousel(cat2, storedCat2Movies);
+  });
+
+  cat2NavLeft.addEventListener("click", function () {
+    swipeLeft(storedCat2Movies);
+    categoryCarousel(cat2, storedCat2Movies);
+  });
+
+  cat3NavRight.addEventListener("click", function () {
+    swipeRight(storedCat3Movies);
+    categoryCarousel(cat3, storedCat3Movies);
+  });
+
+  cat3NavLeft.addEventListener("click", function () {
+    swipeLeft(storedCat3Movies);
+    categoryCarousel(cat3, storedCat3Movies);
+  });
+});
