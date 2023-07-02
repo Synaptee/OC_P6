@@ -23,7 +23,7 @@ async function interrogerAPI(param) {
 
 
 const categories = {
-  "cat1": "Thriller",
+  "cat1": "Drama",
   "cat2": "Comedy",
   "cat3": "Sci-Fi"
 }
@@ -33,9 +33,6 @@ let storedTopRatedMovies = [];
 let storedCat1Movies = [];
 let storedCat2Movies = [];
 let storedCat3Movies = [];
-//let cat1 = "Action";
-//let cat2 = "Comedy";
-//let cat3 = "Sci-Fi";
 let cat1Param = "titles/?sort_by=-imdb_score&genre_contains=" + categories["cat1"];
 let cat2Param = "titles/?sort_by=-imdb_score&genre_contains=" + categories["cat2"];
 let cat3Param = "titles/?sort_by=-imdb_score&genre_contains=" + categories["cat3"];
@@ -67,7 +64,7 @@ function categoryCarousel(category, movieList) {
   let listToUse = movieList;
   document.querySelector("." + category + "_title").innerText = categories[category];
   try {
-    for (let i = index_init_best; i < i + 4; i++) {
+    for (let i = 0; i < i + 4; i++) {
       imgURL = listToUse[i].image_url;
       //console.log(imgURL);
       imageContainer = document.getElementById(category + '_img_' + indexHTML);
@@ -166,32 +163,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
   cat1NavRight.addEventListener("click", function () {
     swipeRight(storedCat1Movies);
-    categoryCarousel(cat1, storedCat1Movies);
+    categoryCarousel("cat1", storedCat1Movies);
   });
 
   cat1NavLeft.addEventListener("click", function () {
     swipeLeft(storedCat1Movies);
-    categoryCarousel(cat1, storedCat1Movies);
+    categoryCarousel("cat1", storedCat1Movies);
   });
 
   cat2NavRight.addEventListener("click", function () {
     swipeRight(storedCat2Movies);
-    categoryCarousel(cat2, storedCat2Movies);
+    categoryCarousel("cat2", storedCat2Movies);
   });
 
   cat2NavLeft.addEventListener("click", function () {
     swipeLeft(storedCat2Movies);
-    categoryCarousel(cat2, storedCat2Movies);
+    categoryCarousel("cat2", storedCat2Movies);
   });
 
   cat3NavRight.addEventListener("click", function () {
     swipeRight(storedCat3Movies);
-    categoryCarousel(cat3, storedCat3Movies);
+    categoryCarousel("cat3", storedCat3Movies);
   });
 
   cat3NavLeft.addEventListener("click", function () {
     swipeLeft(storedCat3Movies);
-    categoryCarousel(cat3, storedCat3Movies);
+    categoryCarousel("cat3", storedCat3Movies);
   });
 });
 
