@@ -67,7 +67,7 @@ h3{
 
 /* MODALE */
 .modal {
-  /* display: none; */
+  display: none;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -102,7 +102,7 @@ h3{
   cursor: pointer;
 }
 
-.title {
+.modal_title {
   font-size: 24px;
   margin-bottom: 10px;
 }

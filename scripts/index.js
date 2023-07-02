@@ -182,18 +182,71 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // **** CODE LIE A LA MODALE ****
-// Obtenir les références des éléments HTML
-var openModalBtn = document.getElementById('openModalBtn');
-var modal = document.getElementById('myModal');
+//Obtenir les références des éléments HTML
+//var openModalBtn = document.getElementById('openModalBtn');
+var modal = document.getElementById('modal');
 var closeBtn = document.getElementsByClassName('close')[0];
 
-// Ouvrir la fenêtre modale lorsque le bouton est cliqué
-openModalBtn.addEventListener('click', function () {
-  modal.style.display = 'block';
-});
+// // Ouvrir la fenêtre modale lorsque le bouton est cliqué
+// openModalBtn.addEventListener('click', function () {
+//   modal.style.display = 'block';
+//   console.log("Je passe ici");
+// });
 
 // Fermer la fenêtre modale lorsque le bouton de fermeture est cliqué
 closeBtn.addEventListener('click', function () {
   modal.style.display = 'none';
 });
 
+
+
+// **** Tests sur les modales ****
+const carouselImages = document.getElementsByClassName("carousel_img");
+
+for (let i = 0; i < carouselImages.length; i++) {
+  carouselImages[i].addEventListener("click", openModal);
+}
+
+function openModal(event) {
+  console.log("Je passe là");
+  // Récupérer l'élément parent de l'image cliquée
+  const idElement = event.target.id;
+  // Récupérer le numéro de l'image cliquée en extrayant le dernier caractère de l'ID
+  const imageNumber = idElement.slice(-1);
+  // Récupérer l'identifiant du film
+  const idMovie = storedTopRatedMovies[imageNumber - 1].id;
+  // Récupérer les datas du films
+  let modalDatas = [];
+  interrogerAPI('titles/' + idMovie).then((data) => {
+
+    modalDatas = data;
+
+    // Afficher les informations dans la fenêtre modale
+    var modal = document.getElementById("modal");
+
+
+    document.querySelector(".modal_title").innerText = modalDatas.title;
+    document.querySelector(".poster").src = modalDatas.image_url;
+    document.querySelector(".description").innerText = "Synopsis : " + modalDatas.description;
+    document.querySelector(".genre").innerText = "Genres : " + modalDatas.genres;
+    document.querySelector(".director").innerText = "Réalisateur : " + modalDatas.directors;
+    document.querySelector(".actors").innerText = "Acteurs : " + modalDatas.actors;
+    document.querySelector(".origin").innerText = "Pays d'origine : " + modalDatas.countries;
+    document.querySelector(".duration").innerText = "Durée : " + modalDatas.duration + " minutes";
+    document.querySelector(".rating").innerText = "Note spectateurs : " + modalDatas.rated;
+    document.querySelector(".imdb_score").innerText = "Note iMDB : " + modalDatas.imdb_score;
+    document.querySelector(".release_date").innerText = "Date de sortie : " + modalDatas.date_published;
+    document.querySelector(".box_office").innerText = "Résultats au box office : " + modalDatas.worldwide_gross_income + " " + modalDatas.budget_currency;
+
+
+
+    // Afficher la fenêtre modale
+    modal.style.display = "block";
+
+  });
+
+
+
+
+
+}
