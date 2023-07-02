@@ -178,3 +178,22 @@ document.addEventListener("DOMContentLoaded", function () {
     categoryCarousel(cat3, storedCat3Movies);
   });
 });
+
+
+
+// **** CODE LIE A LA MODALE ****
+// Obtenir les références des éléments HTML
+var openModalBtn = document.getElementById('openModalBtn');
+var modal = document.getElementById('myModal');
+var closeBtn = document.getElementsByClassName('close')[0];
+
+// Ouvrir la fenêtre modale lorsque le bouton est cliqué
+openModalBtn.addEventListener('click', function () {
+  modal.style.display = 'block';
+});
+
+// Fermer la fenêtre modale lorsque le bouton de fermeture est cliqué
+closeBtn.addEventListener('click', function () {
+  modal.style.display = 'none';
+});
+
