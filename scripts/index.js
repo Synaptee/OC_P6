@@ -20,17 +20,32 @@ async function interrogerAPI(param) {
   }
 }
 
+
+
+const categories = {
+  "cat1": "Thriller",
+  "cat2": "Comedy",
+  "cat3": "Sci-Fi"
+}
+
 let index_init_best = 0;
 let storedTopRatedMovies = [];
 let storedCat1Movies = [];
 let storedCat2Movies = [];
 let storedCat3Movies = [];
-let cat1 = "Action";
-let cat2 = "Comedy";
-let cat3 = "Sci-Fi";
-let cat1Param = "titles/?sort_by=-imdb_score&genre_contains=Thriller";
-let cat2Param = "titles/?sort_by=-imdb_score&genre_contains=Comedy";
-let cat3Param = "titles/?sort_by=-imdb_score&genre_contains=Sci-Fi";
+//let cat1 = "Action";
+//let cat2 = "Comedy";
+//let cat3 = "Sci-Fi";
+let cat1Param = "titles/?sort_by=-imdb_score&genre_contains=" + categories["cat1"];
+let cat2Param = "titles/?sort_by=-imdb_score&genre_contains=" + categories["cat2"];
+let cat3Param = "titles/?sort_by=-imdb_score&genre_contains=" + categories["cat3"];
+
+const dictionnaire = {
+  "best": storedTopRatedMovies,
+  "cat1": storedCat1Movies,
+  "cat2": storedCat2Movies,
+  "cat3": storedCat3Movies
+}
 
 function bestRatedCarousel() {
   let indexHTML = 1;
@@ -50,6 +65,7 @@ function bestRatedCarousel() {
 function categoryCarousel(category, movieList) {
   let indexHTML = 1;
   let listToUse = movieList;
+  document.querySelector("." + category + "_title").innerText = categories[category];
   try {
     for (let i = index_init_best; i < i + 4; i++) {
       imgURL = listToUse[i].image_url;
@@ -116,13 +132,13 @@ window.addEventListener('load', () => {
     bestRatedCarousel();
   });
   loadTopCategoryMovies(cat1Param, storedCat1Movies).then(() => {
-    categoryCarousel(cat1, storedCat1Movies);
+    categoryCarousel("cat1", storedCat1Movies);
   });
   loadTopCategoryMovies(cat2Param, storedCat2Movies).then(() => {
-    categoryCarousel(cat2, storedCat2Movies);
+    categoryCarousel("cat2", storedCat2Movies);
   });
   loadTopCategoryMovies(cat3Param, storedCat3Movies).then(() => {
-    categoryCarousel(cat3, storedCat3Movies);
+    categoryCarousel("cat3", storedCat3Movies);
   });
 });
 
@@ -187,12 +203,6 @@ document.addEventListener("DOMContentLoaded", function () {
 var modal = document.getElementById('modal');
 var closeBtn = document.getElementsByClassName('close')[0];
 
-// // Ouvrir la fenêtre modale lorsque le bouton est cliqué
-// openModalBtn.addEventListener('click', function () {
-//   modal.style.display = 'block';
-//   console.log("Je passe ici");
-// });
-
 // Fermer la fenêtre modale lorsque le bouton de fermeture est cliqué
 closeBtn.addEventListener('click', function () {
   modal.style.display = 'none';
@@ -208,13 +218,14 @@ for (let i = 0; i < carouselImages.length; i++) {
 }
 
 function openModal(event) {
-  console.log("Je passe là");
   // Récupérer l'élément parent de l'image cliquée
   const idElement = event.target.id;
   // Récupérer le numéro de l'image cliquée en extrayant le dernier caractère de l'ID
   const imageNumber = idElement.slice(-1);
+  const categID = idElement.slice(0, 4);
   // Récupérer l'identifiant du film
-  const idMovie = storedTopRatedMovies[imageNumber - 1].id;
+  let varListe = dictionnaire[categID];
+  const idMovie = varListe[imageNumber - 1].id;
   // Récupérer les datas du films
   let modalDatas = [];
   interrogerAPI('titles/' + idMovie).then((data) => {
