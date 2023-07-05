@@ -1,14 +1,5 @@
 // ********    CA ON SAIT QUE CA MARCHE   *****
-function bestRatedMovie() {
-  try {
-    const bestMovieURL = storedTopRatedMovies[0].image_url;
-    const imageContainer = document.getElementById('best_movie_img');
-    imageContainer.style.backgroundImage = `url(${bestMovieURL})`;
 
-  } catch (error) {
-    console.error(error);
-  }
-}
 
 async function interrogerAPI(param) {
   try {
@@ -23,7 +14,7 @@ async function interrogerAPI(param) {
 
 
 const categories = {
-  "cat1": "Drama",
+  "cat1": "Romance",
   "cat2": "Comedy",
   "cat3": "Sci-Fi"
 }
@@ -38,7 +29,7 @@ let cat2Param = "titles/?sort_by=-imdb_score&genre_contains=" + categories["cat2
 let cat3Param = "titles/?sort_by=-imdb_score&genre_contains=" + categories["cat3"];
 
 const dictionnaire = {
-  "best": storedTopRatedMovies,
+  "catI": storedTopRatedMovies,
   "cat1": storedCat1Movies,
   "cat2": storedCat2Movies,
   "cat3": storedCat3Movies
@@ -46,37 +37,36 @@ const dictionnaire = {
 
 function bestRatedCarousel() {
   let indexHTML = 1;
-  try {
-    for (let i = 0; i < i + 4; i++) {
+
+  for (let i = 0; i < storedTopRatedMovies.length && i < 4; i++) {
+    try {
       imgURL = storedTopRatedMovies[i].image_url;
-      imageContainer = document.getElementById('best_img_' + indexHTML);
+      imageContainer = document.getElementById('catI_img_' + indexHTML);
+      //console.log(i + " : " + imgURL);
       imageContainer.style.backgroundImage = `url(${imgURL})`;
       indexHTML++;
+    } catch (error) {
+      console.error('Erreur de récup : ' + error + ' indexHTML : ' + indexHTML);
     }
-  } catch (error) {
-    console.error(error);
   }
 }
-
 
 function categoryCarousel(category, movieList) {
   let indexHTML = 1;
   let listToUse = movieList;
   document.querySelector("." + category + "_title").innerText = categories[category];
-  try {
-    for (let i = 0; i < i + 4; i++) {
+
+  for (let i = 0; i < listToUse.length && i < 4; i++) {
+    try {
       imgURL = listToUse[i].image_url;
-      //console.log(imgURL);
       imageContainer = document.getElementById(category + '_img_' + indexHTML);
       imageContainer.style.backgroundImage = `url(${imgURL})`;
       indexHTML++;
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
   }
 }
-
-
 
 async function loadDatas(param, movieList) {
   try {
@@ -90,21 +80,22 @@ async function loadDatas(param, movieList) {
       movieList.push(response2.results[i]);
     }
   } catch (error) {
+    console.error("Erreur fonction load : " + error);
+  }
+}
+
+function bestRatedMovie() {
+  try {
+    const bestMovieURL = storedTopRatedMovies[0].image_url;
+    const imageContainer = document.getElementById('best_movie_img');
+    imageContainer.style.backgroundImage = `url(${bestMovieURL})`;
+
+  } catch (error) {
     console.error(error);
   }
 }
 
-
-
-
-async function loadTopRatedMovies() {
-  let topRatedMovies = [];
-  let param = 'titles/?sort_by=-imdb_score';
-  await loadDatas(param, topRatedMovies);
-  storedTopRatedMovies = topRatedMovies;
-}
-
-async function loadTopCategoryMovies(param, storedmovieList) {
+async function loadMovies(param, storedmovieList) {
   let movieList = storedmovieList
   //let param = param;
   await loadDatas(param, movieList);
@@ -112,6 +103,7 @@ async function loadTopCategoryMovies(param, storedmovieList) {
 }
 
 function swipeRight(movieList) {
+  console.log("Yclick")
   let firstMovie = movieList.shift();
   movieList.push(firstMovie);
 }
@@ -124,17 +116,17 @@ function swipeLeft(movieList) {
 
 // Chargement initial de la page
 window.addEventListener('load', () => {
-  loadTopRatedMovies().then(() => {
+  loadMovies('titles/?sort_by=-imdb_score', storedTopRatedMovies).then(() => {
     bestRatedMovie();
     bestRatedCarousel();
   });
-  loadTopCategoryMovies(cat1Param, storedCat1Movies).then(() => {
+  loadMovies(cat1Param, storedCat1Movies).then(() => {
     categoryCarousel("cat1", storedCat1Movies);
   });
-  loadTopCategoryMovies(cat2Param, storedCat2Movies).then(() => {
+  loadMovies(cat2Param, storedCat2Movies).then(() => {
     categoryCarousel("cat2", storedCat2Movies);
   });
-  loadTopCategoryMovies(cat3Param, storedCat3Movies).then(() => {
+  loadMovies(cat3Param, storedCat3Movies).then(() => {
     categoryCarousel("cat3", storedCat3Movies);
   });
 });
@@ -215,13 +207,21 @@ for (let i = 0; i < carouselImages.length; i++) {
 }
 
 function openModal(event) {
+  console.log("Y clic");
   // Récupérer l'élément parent de l'image cliquée
   const idElement = event.target.id;
+  //console.log("Element id =" + idElement);
   // Récupérer le numéro de l'image cliquée en extrayant le dernier caractère de l'ID
   const imageNumber = idElement.slice(-1);
+  //console.log("Image number =" + imageNumber);
   const categID = idElement.slice(0, 4);
+  //console.log("Categ ID =" + categID);
+  //console.log("Top movies" + storedTopRatedMovies)
+  //console.log("Top movies 2" + dictionnaire["cat1"])
   // Récupérer l'identifiant du film
   let varListe = dictionnaire[categID];
+  //console.log(dictionnaire)
+  //console.log(varListe)
   const idMovie = varListe[imageNumber - 1].id;
   // Récupérer les datas du films
   let modalDatas = [];
@@ -244,7 +244,7 @@ function openModal(event) {
     document.querySelector(".rating").innerText = "Note spectateurs : " + modalDatas.rated;
     document.querySelector(".imdb_score").innerText = "Note iMDB : " + modalDatas.imdb_score;
     document.querySelector(".release_date").innerText = "Date de sortie : " + modalDatas.date_published;
-    document.querySelector(".box_office").innerText = "Résultats au box office : " + modalDatas.worldwide_gross_income + " " + modalDatas.budget_currency;
+    //document.querySelector(".box_office").innerText = "Résultats au box office : " + modalDatas.worldwide_gross_income + " " + modalDatas.budget_currency;
 
 
 

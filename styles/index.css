@@ -14,13 +14,22 @@ header {
 .menu{display: flex;
 gap : 20%}
 
+.main_movie{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    }
+
+.main_movie_container{
+  display: flex;
+  
+    }
 .best_movie{
-    margin: 20px;
-    border: solid black 5px;
-    height: 20vh;
+    
     background-size: auto;
     background-repeat: no-repeat;
     background-position: center;
+    width: 50%
 }
 
 

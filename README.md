@@ -6,7 +6,7 @@
 Suivez les étapes d'installation (versions françaises et anglaises disponibles) de l'API en suivant [ce guide](https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR).
 
 ## Lancement
-
+Pour accèder à la page pricnipale, ouvrez le fichier index.html dans un navigateur.
 
 ## Utilisation
 
