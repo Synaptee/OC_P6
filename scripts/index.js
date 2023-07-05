@@ -89,6 +89,13 @@ function bestRatedMovie() {
     const bestMovieURL = storedTopRatedMovies[0].image_url;
     const imageContainer = document.getElementById('best_movie_img');
     imageContainer.style.backgroundImage = `url(${bestMovieURL})`;
+    document.querySelector(".star_movie_title").innerText = storedTopRatedMovies[0].title;
+    id_star_movie = storedTopRatedMovies[0].id;
+    id_star_resume = "";
+    interrogerAPI('titles/' + id_star_movie).then((data) => {
+      id_star_resume = data.description;
+      document.querySelector(".star_movie_resume").innerText = id_star_resume;
+    });
 
   } catch (error) {
     console.error(error);
