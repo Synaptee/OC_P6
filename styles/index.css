@@ -39,6 +39,11 @@ gap : 20%}
     
 }
 
+.star_movie_title{
+  font-size: xx-large;
+  font-weight: bold;
+}
+
 .best_movie_datas{
     width: 50%;
     display: flex;
