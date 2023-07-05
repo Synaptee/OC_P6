@@ -208,6 +208,7 @@ closeBtn.addEventListener('click', function () {
 
 // **** Tests sur les modales ****
 const carouselImages = document.getElementsByClassName("carousel_img");
+const buttonStar = document.getElementsByClassName("star_movie_button");
 
 for (let i = 0; i < carouselImages.length; i++) {
   carouselImages[i].addEventListener("click", openModal);
