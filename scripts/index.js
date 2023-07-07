@@ -135,7 +135,7 @@ window.addEventListener('load', () => {
 });
 
 
-//document.addEventListener("DOMContentLoaded", function () {
+
 const bestNavRight = document.querySelector(".best-nav-right");
 const bestNavLeft = document.querySelector(".best-nav-left");
 const cat1NavRight = document.querySelector(".cat1-nav-right");
@@ -185,7 +185,7 @@ cat3NavLeft.addEventListener("click", function () {
   swipeLeft(storedCat3Movies);
   categoryCarousel("cat3", storedCat3Movies);
 });
-//});
+
 
 
 
@@ -205,18 +205,24 @@ closeBtn.addEventListener('click', function () {
 // **** Tests sur les modales ****
 const carouselImages = document.getElementsByClassName("carousel_img");
 const buttonStar = document.getElementsByClassName("star_movie_button");
-
+buttonStar[0].addEventListener("click", openModal);
 for (let i = 0; i < carouselImages.length; i++) {
   carouselImages[i].addEventListener("click", openModal);
 }
 
 function openModal(event) {
-  console.log("Y clic");
+
   const idElement = event.target.id;
-  const imageNumber = idElement.slice(-1);
-  const categID = idElement.slice(0, 4);
-  let varListe = dictionnaire[categID];
-  const idMovie = varListe[imageNumber - 1].id;
+  let idMovie = "";
+  if (idElement == "star_movie") {
+    idMovie = "1508669";
+
+  } else {
+    const imageNumber = idElement.slice(-1);
+    const categID = idElement.slice(0, 4);
+    let varListe = dictionnaire[categID];
+    idMovie = varListe[imageNumber - 1].id;
+  }
   let modalDatas = [];
   interrogerAPI('titles/' + idMovie).then((data) => {
 
