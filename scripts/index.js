@@ -252,7 +252,7 @@ function openModal(event) {
     document.querySelector(".rating").innerText = "Note spectateurs : " + modalDatas.rated;
     document.querySelector(".imdb_score").innerText = "Note iMDB : " + modalDatas.imdb_score;
     document.querySelector(".release_date").innerText = "Date de sortie : " + modalDatas.date_published;
-    //document.querySelector(".box_office").innerText = "Résultats au box office : " + modalDatas.worldwide_gross_income + " " + modalDatas.budget_currency;
+    document.querySelector(".box_office").innerText = "Résultats au box office : " + modalDatas.worldwide_gross_income + " " + modalDatas.budget_currency;
 
 
 

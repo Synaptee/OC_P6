@@ -8,12 +8,3 @@ Suivez les étapes d'installation (versions françaises et anglaises disponibles
 ## Lancement
 Pour accèder à la page pricnipale, ouvrez le fichier index.html dans un navigateur.
 
-## Utilisation
-
-1. ** Affichage principal **
-
-2. ** Film à la une **
-
-3. ** Catégories **
-
-4. ** Fenêtre modale **
