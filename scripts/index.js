@@ -11,8 +11,6 @@ async function interrogerAPI(param) {
   }
 }
 
-
-
 const categories = {
   "cat1": "Romance",
   "cat2": "Comedy",
@@ -42,7 +40,6 @@ function bestRatedCarousel() {
     try {
       imgURL = storedTopRatedMovies[i].image_url;
       imageContainer = document.getElementById('catI_img_' + indexHTML);
-      //console.log(i + " : " + imgURL);
       imageContainer.style.backgroundImage = `url(${imgURL})`;
       indexHTML++;
     } catch (error) {
@@ -104,7 +101,6 @@ function bestRatedMovie() {
 
 async function loadMovies(param, storedmovieList) {
   let movieList = storedmovieList
-  //let param = param;
   await loadDatas(param, movieList);
   storedmovieList = movieList;
 }
@@ -139,57 +135,57 @@ window.addEventListener('load', () => {
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  const bestNavRight = document.querySelector(".best-nav-right");
-  const bestNavLeft = document.querySelector(".best-nav-left");
-  const cat1NavRight = document.querySelector(".cat1-nav-right");
-  const cat1NavLeft = document.querySelector(".cat1-nav-left");
-  const cat2NavRight = document.querySelector(".cat2-nav-right");
-  const cat2NavLeft = document.querySelector(".cat2-nav-left");
-  const cat3NavRight = document.querySelector(".cat3-nav-right");
-  const cat3NavLeft = document.querySelector(".cat3-nav-left");
+//document.addEventListener("DOMContentLoaded", function () {
+const bestNavRight = document.querySelector(".best-nav-right");
+const bestNavLeft = document.querySelector(".best-nav-left");
+const cat1NavRight = document.querySelector(".cat1-nav-right");
+const cat1NavLeft = document.querySelector(".cat1-nav-left");
+const cat2NavRight = document.querySelector(".cat2-nav-right");
+const cat2NavLeft = document.querySelector(".cat2-nav-left");
+const cat3NavRight = document.querySelector(".cat3-nav-right");
+const cat3NavLeft = document.querySelector(".cat3-nav-left");
 
-  bestNavRight.addEventListener("click", function () {
-    swipeRight(storedTopRatedMovies);
-    bestRatedCarousel();
-  });
-
-  bestNavLeft.addEventListener("click", function () {
-    swipeLeft(storedTopRatedMovies);
-    bestRatedCarousel();
-  });
-
-
-  cat1NavRight.addEventListener("click", function () {
-    swipeRight(storedCat1Movies);
-    categoryCarousel("cat1", storedCat1Movies);
-  });
-
-  cat1NavLeft.addEventListener("click", function () {
-    swipeLeft(storedCat1Movies);
-    categoryCarousel("cat1", storedCat1Movies);
-  });
-
-  cat2NavRight.addEventListener("click", function () {
-    swipeRight(storedCat2Movies);
-    categoryCarousel("cat2", storedCat2Movies);
-  });
-
-  cat2NavLeft.addEventListener("click", function () {
-    swipeLeft(storedCat2Movies);
-    categoryCarousel("cat2", storedCat2Movies);
-  });
-
-  cat3NavRight.addEventListener("click", function () {
-    swipeRight(storedCat3Movies);
-    categoryCarousel("cat3", storedCat3Movies);
-  });
-
-  cat3NavLeft.addEventListener("click", function () {
-    swipeLeft(storedCat3Movies);
-    categoryCarousel("cat3", storedCat3Movies);
-  });
+bestNavRight.addEventListener("click", function () {
+  swipeRight(storedTopRatedMovies);
+  bestRatedCarousel();
 });
+
+bestNavLeft.addEventListener("click", function () {
+  swipeLeft(storedTopRatedMovies);
+  bestRatedCarousel();
+});
+
+
+cat1NavRight.addEventListener("click", function () {
+  swipeRight(storedCat1Movies);
+  categoryCarousel("cat1", storedCat1Movies);
+});
+
+cat1NavLeft.addEventListener("click", function () {
+  swipeLeft(storedCat1Movies);
+  categoryCarousel("cat1", storedCat1Movies);
+});
+
+cat2NavRight.addEventListener("click", function () {
+  swipeRight(storedCat2Movies);
+  categoryCarousel("cat2", storedCat2Movies);
+});
+
+cat2NavLeft.addEventListener("click", function () {
+  swipeLeft(storedCat2Movies);
+  categoryCarousel("cat2", storedCat2Movies);
+});
+
+cat3NavRight.addEventListener("click", function () {
+  swipeRight(storedCat3Movies);
+  categoryCarousel("cat3", storedCat3Movies);
+});
+
+cat3NavLeft.addEventListener("click", function () {
+  swipeLeft(storedCat3Movies);
+  categoryCarousel("cat3", storedCat3Movies);
+});
+//});
 
 
 
@@ -216,22 +212,11 @@ for (let i = 0; i < carouselImages.length; i++) {
 
 function openModal(event) {
   console.log("Y clic");
-  // Récupérer l'élément parent de l'image cliquée
   const idElement = event.target.id;
-  //console.log("Element id =" + idElement);
-  // Récupérer le numéro de l'image cliquée en extrayant le dernier caractère de l'ID
   const imageNumber = idElement.slice(-1);
-  //console.log("Image number =" + imageNumber);
   const categID = idElement.slice(0, 4);
-  //console.log("Categ ID =" + categID);
-  //console.log("Top movies" + storedTopRatedMovies)
-  //console.log("Top movies 2" + dictionnaire["cat1"])
-  // Récupérer l'identifiant du film
   let varListe = dictionnaire[categID];
-  //console.log(dictionnaire)
-  //console.log(varListe)
   const idMovie = varListe[imageNumber - 1].id;
-  // Récupérer les datas du films
   let modalDatas = [];
   interrogerAPI('titles/' + idMovie).then((data) => {
 
