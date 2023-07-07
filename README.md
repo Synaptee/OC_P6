@@ -8,3 +8,5 @@ Suivez les étapes d'installation (versions françaises et anglaises disponibles
 ## Lancement
 Pour accèder à la page pricnipale, ouvrez le fichier index.html dans un navigateur.
 
+L'affihage a été testé sur 3 navigateurs majeurs : Chrome, Safari et Mozilla.
+
